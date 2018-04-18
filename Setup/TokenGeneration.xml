@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="3289beb4-32e7-442c-804d-03b3b3d0943e" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="TokenGeneration" searchProperties="true" timeout="0" maxResults="0" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="3289beb4-32e7-442c-804d-03b3b3d0943efileName">TokenGeneration</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:testStep type="restrequest" name="Token" id="28727714-a52a-4aa3-bf5d-199120380531"><con:settings/><con:config service="http://cryptosurveystaging.clidiem.com" resourcePath="/token" methodName="POST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Token" id="8869b705-635c-4f81-b002-f0f365804835" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#Project#EndPoint}</con:endpoint><con:request>username=Siva@clidiem.com&amp;
+password=Test@123&amp;
+grant_type=password&amp;
+usertype=applicationuser&amp;
+isfbuser=false</con:request><con:originalUri>http://digisurveyapi.clidiem.com/token</con:originalUri><con:assertion type="Valid HTTP Status Codes" id="dba40d26-3f0f-4db1-9c9c-e806712bb0c1" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="330d424b-a5ef-43ee-aa23-c6bb7dfac486" name="Successful Login"><con:configuration><path>$['StatusMessage']</path><content>Successful login</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" id="a5375719-aaa1-4768-9507-1a0b2f9f11ee" name="Script Assertion" disabled="true"><con:configuration><scriptText>import org.apache.commons.lang.RandomStringUtils
+import com.eviware.soapui.support.types.StringToStringMap
+
+import groovy.json.JsonSlurper;
+import java.util.Date;
+
+def tc = context.testCase.testSuite.project.testSuites[ 'Setup' ].testCases[ 'TokenGeneration' ]
+
+def response = tc.getTestStepByName( 'Token' ).getProperty ( 'Response' ).getValue()  
+def slurper = new JsonSlurper() ;
+def jsonresponse = slurper.parseText response;  
+
+// Token Capture
+Tokenvalue = jsonResponse.access_token 
+Token= 'Bearer   ' + '  ' + Tokenvalue
+log.info Token  
+
+if (Token==null)  {
+	testRunner.fail("FAIL . Did not find access_token")
+}   else {
+	context.testCase.testSuite.project.setPropertyValue("Token",Token)
+}  </scriptText></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="5a21046f-a5b9-4dd1-8951-af178495aab8" name="JsonPath Match" disabled="true"><con:configuration/></con:assertion><con:assertion type="JsonPath Match" id="cbf061f3-90d8-46f0-8226-1f6f68f08be5" name="JsonPath Match 2"><con:configuration/></con:assertion><con:assertion type="JsonPath Match" id="ae94125f-f021-471e-a37b-2bcdc36d84d9" name="JsonPath Match 3"><con:configuration/></con:assertion><con:assertion type="JsonPath Match" id="6c3dbcde-7937-4b93-83c0-382082df9873" name="JsonPath Match 4"><con:configuration><path>[StatusMessage]</path><content>yes
+</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="datasource" name="DataSource" id="dcd46329-0f74-458d-99a6-5dfc02f7f0eb" disabled="true"><con:settings/><con:config xsi:type="con:DataSourceStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSource type="Grid"><con:configuration><check><![CDATA[<xml-fragment><con:entry xmlns:con="http://eviware.com/soapui/config">true</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">true</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">true</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">true</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">true</con:entry></xml-fragment>]]></check><row>&lt;xml-fragment>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;/xml-fragment></row><row>&lt;xml-fragment>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;/xml-fragment></row><row>&lt;xml-fragment>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;/xml-fragment></row><row>&lt;xml-fragment>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;/xml-fragment></row><row>&lt;xml-fragment>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;/xml-fragment></row><recognizeAsPlainText>true</recognizeAsPlainText></con:configuration></con:dataSource><con:shared>true</con:shared><con:restartShared>true</con:restartShared><con:property>Form editor is not applicable for this request</con:property><con:completeLastOperation>true</con:completeLastOperation><con:restartOnRun>true</con:restartOnRun></con:config></con:testStep><con:testStep type="datasourceloop" name="DataSource Loop" id="34fa1076-eb64-4e36-ac1c-92962ac462b2" disabled="true"><con:settings/><con:config><dataSourceStep>DataSource</dataSourceStep><targetStep>Token</targetStep></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer" id="5f1c5531-504a-4b32-b1e8-4adbe60e80a5" disabled="true"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>Token</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Token</con:sourceStep><con:sourcePath>$['access_token']</con:sourcePath><con:targetType>Token</con:targetType><con:targetStep>Properties</con:targetStep><con:targetPath/><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>Token</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Token</con:sourceStep><con:sourcePath>$['access_token']</con:sourcePath><con:targetType>Token</con:targetType><con:targetStep>Properties</con:targetStep><con:targetPath/><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>Token</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Token</con:sourceStep><con:sourcePath>$['access_token']</con:sourcePath><con:targetType>Token</con:targetType><con:targetStep>Properties</con:targetStep><con:targetPath/><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="properties" name="Properties" id="3d6309d0-3047-4af9-80a6-012ece159f77" disabled="true"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>Token</con:name><con:value>NxasOtnL5mc-3xmG4SQIedpx0WamWRcuhwrki8WQpQ_g_MDzby0d2KYHR9UzMS_0_-N2RdK0R41A-6Sg-0WBN7AZidIwQBE9kmlRPSZcc-2dJ82afSFzjwJApBLlHfsCvDcO6S8Oy4wg981BFLZxJfCKLCF4nk94X5C8E3_QLozEhzv-g1OiAeMEin13yb4UFbPAOGhlf1Np9DT-1BcZkgGi25KW6a7_aycbjW2yt1Y4IwH5xNWA4D_PBSSxbTaRRxYL3Sx6_QBmgkBBu9kYjHMOAS2Rv7QTrO_9yACuCpKOlYhh_5yIt7350mjsTlRfHDp0Z0LXFzYTv0p8CBR7WS2OZYUQqVjBtV3jGLdHLlQK94DiQ96cArK9TA9tJZZwlsVHaqYAlDSSXDPkz4tD2vlR9EgMVyOK3LD4XKAcld2IN2uOBGEo8t0KBW0D1gzivZX3LNf0gFaZ7-DgFbdq_feEGhIODWsOjuIMkR5X7-fGHS6PNwJLZOoK8h7_okpFC9joPba6y4f8rsFtV-HgeyTAYxVQoAhstAFhqsWNS9FDbbuqyT8MxnsJHyYx6gP962TsJuQmkRLn261Y4KpAFVoyBqHbgjN5iCpzZaJin5nWrmJ8gYBz-Gvp_ttFAFWI85YYIOHVVprqIEjgZr2gDg</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="xfer_bearer_token" id="c00ac74c-5be6-48fe-9a6c-1ea2984c6aae" disabled="true"><con:settings/><con:config><script>def token = context.expand( '${#Project#Token}' )
+return 'Bearer' + ' ' + token
+def result = context.expand( '${xfer_bearer_token#result}' )
+
+
+import org.apache.commons.lang.RandomStringUtils
+import com.eviware.soapui.support.types.StringToStringMap
+
+import groovy.json.JsonSlurper;
+import java.util.Date;
+
+def tc = context.testCase.testSuite.project.testSuites['Setup'].testCases['TokenGeneration']
+
+def response = tc.getTestStepByName('xfer_bearer_token').getProperty('Response').getValue()
+def slurper = new JsonSlurper();
+def jsonResponse = slurper.parseText response;
+
+
+// Token capture
+Authorization = jsonResponse.access_token
+log.info Authorization
+
+if (Authorization==null) {
+		testRunner.fail(">>>>>>>>>> FAIL: did not find access_Token. Check the Service")
+} else {
+	
+	context.testCase.testSuite.project.setPropertyValue( "Authorization", Authorization)
+	//log.info ">>>>>>>>>> worker.hire - manager - US SSN -->" + context.testCase.testSuite.project.getPropertyValue( "NH-MGR-US-SSN")
+}</script></con:config></con:testStep><con:testStep type="datasink" name="DataSink" id="f14c0ef6-3c50-4868-942c-d94abdf82508" disabled="true"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties/></con:config></con:testStep><con:testStep type="datasourceloop" name="DataSource Loop 2" id="e8a49a52-ee24-40a0-a3d6-018b8995d0d7" disabled="true"><con:settings/><con:config><dataSourceStep/><targetStep/></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>da175bf4-6480-4bc1-bd90-19f17d9ca39d</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>2d1c43dd-9953-4add-b3f2-b5fdeb9dfc05</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>28727714-a52a-4aa3-bf5d-199120380531</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase>

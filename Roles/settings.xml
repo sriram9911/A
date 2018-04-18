@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="3186be61-0276-4851-a265-a802aa5d232c" name="Roles" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="3186be61-0276-4851-a265-a802aa5d232cfileName">Roles</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>
